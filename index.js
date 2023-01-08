@@ -1,4 +1,6 @@
 const express = require('express');
+const routerApi = require('./routes/index');
+
 const app = express();
 const Port = 3000;
 
@@ -8,35 +10,8 @@ app.get('/', (req ,res) =>{
   });
 });
 
-app.get('/productos', (req, res) =>{
-  res.json([{
-    name: 'producto 1',
-    price: '20000',
-  },
-  {
-    name: 'producto 2',
-    price: '20000',
-  }
-]);
-});
-
-app.get('/productos/:id', (req, res) => {
-  const { id } = req.params;
-  res.json({
-    id,
-    name: 'producto 1',
-    price: '20000',
-  });
-});
-
-app.get('/category/:categoryId/productos/:profuctId', (req, res ) =>{
-  const { categoryId, productId } = req.params;
-  res.json({
-    categoryId,
-    productId,
-  });
-})
+routerApi(app);
 
 app.listen(Port, () => {
-  console.log('server on port' + Port);
+  console.log('server on port ' + Port);
 });
