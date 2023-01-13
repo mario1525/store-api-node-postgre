@@ -5,10 +5,10 @@ class categoryservices {
 
   constructor(){
     this.category = [];
-    this.generator();
+    this.generate();
   }
 
-  generator(){
+  generate(){
     const limit = 10;
     for (let i = 0; i< limit; i++ ){
       this.category.push({
@@ -18,7 +18,13 @@ class categoryservices {
     }
   }
 
-  create(){
+  create(data){
+    const newcategory = {
+      id: faker.datatype.uuid(),
+      ...data
+    }
+    this.category.push(newcategory);
+    return newcategory;
   }
 
   find(){
@@ -29,10 +35,27 @@ class categoryservices {
     return this.category.find((item) => item.id === id);
   }
 
-  update(){
+  update(id , changes){
+    const index = this.category.findIndex(item => item.id === id);
+    if (index === -1){
+      throw new Error('category not found');
+    }
+    const category = this.category.findIndex(item => item.id === id);
+    this.category[index] ={
+      ...category,
+      ...changes,
+    }
+    return this.category[index];
   }
 
-  delete(){}
+  delete(id){
+    const index = this.category.findIndex(item => item.id === id );
+    if(index === -1){
+      throw new Error('category not found');
+    }
+    this.category.splice(index, 1);
+    return {id}
+  }
 
 }
 
