@@ -14,4 +14,23 @@ router.get('/:id', (req, res) => {
   res.json(Users.findOne(id));
 })
 
+router.post('/', (req, res) =>{
+  const body = req.body;
+  const newUser = Users.create(body);
+  res.status(201).json(newUser);
+})
+
+router.patch('/:id', (req, res) =>{
+  const {id} = req.params;
+  const body = req.body;
+  const user = Users.update(id, body );
+  res.json(user);
+})
+
+router.delete('/:id', (req, res) =>{
+  const {id} = req.params;
+  const rta = Users.delete(id);
+  res.json(rta);
+})
+
 module.exports = router;

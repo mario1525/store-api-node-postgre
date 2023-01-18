@@ -1,6 +1,8 @@
 const express = require('express');
 const routerApi = require('./routes/index');
 
+const {logErrors, errorHandler} = require('./middlewares/error.handler');
+
 const app = express();
 const Port = 3000;
 
@@ -13,6 +15,9 @@ app.get('/', (req ,res) =>{
 });
 
 routerApi(app);
+
+app.use(logErrors);
+app.use(errorHandler);
 
 app.listen(Port, () => {
   console.log('server on port ' + Port);
