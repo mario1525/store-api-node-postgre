@@ -16,6 +16,7 @@ class productservice {
         name: faker.commerce.productName(),
         price: parseInt(faker.commerce.price()),
         image: faker.image.imageUrl(),
+        isBlock: faker.datatype.boolean(),
       });
     }
   }
@@ -34,13 +35,21 @@ class productservice {
   }
 
   async findone(id) {
-    return this.products.find((item) => item.id === id);
+    const product =  this.products.find((item) => item.id === id);
+    if(!product){
+      throw boom.notFound("product not found");
+    }
+    if(product.isBlock) {
+      throw boom.conflict("product is block");
+    }
+    return product;
+
   }
 
   async update(id, changes) {
     const index = this.products.findIndex(item => item.id === id);
     if (index === -1) {
-      throw new Error('product not found');
+      throw boom.notFound("product not found");
     }
     const produt = this.products[index];
     this.products[index]= {
