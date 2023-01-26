@@ -4,13 +4,17 @@ const categoryservices = require('./../services/category.services');
 const category = new categoryservices();
 
 //pidiendo dos parametros
-router.get('/', (req, res ) =>{
-  const categories = category.find();
-  res.json(categories);
+router.get('/', (req, res, next) => {
+  try {
+    const categories = category.find();
+    res.json(categories);
+  } catch (error) {
+    next(error);
+  }
 });
 
-router.get('/:id', (req, res) =>{
-  const {id} = req.params;
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
   const catego = category.findone(id);
   res.json(catego);
 });
@@ -22,16 +26,16 @@ router.post('/', (req, res) => {
 });
 
 router.patch('/:id', (req, res) => {
-  const {id } = req.params;
+  const { id } = req.params;
   const body = req.body;
   const categories = category.update(id, body);
   res.json(categories);
 });
 
 router.delete('/:id', (req, res) => {
-  const {id } = req.params;
+  const { id } = req.params;
   const categories = category.delete(id);
   res.json(categories);
-})
+});
 
 module.exports = router;
