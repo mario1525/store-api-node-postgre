@@ -2,8 +2,10 @@ const express = require('express');
 const router = express.Router();
 const categoryservices = require('./../services/category.services');
 const category = new categoryservices();
+const validatorHandler = require('../middlewares/validator.handler');
+const {createCategorySchema, updateCategorySchema, getCategorySchema} = require('../schemas/category.schema');
 
-//pidiendo dos parametros
+//devuelve todas las categorias
 router.get('/', (req, res, next) => {
   try {
     const categories = category.find();
@@ -13,29 +15,60 @@ router.get('/', (req, res, next) => {
   }
 });
 
-router.get('/:id', (req, res) => {
-  const { id } = req.params;
-  const catego = category.findone(id);
-  res.json(catego);
+//devuelve una sola categoria
+router.get('/:id',
+validatorHandler(getCategorySchema, 'params'),
+ (req, res, next ) => {
+  try {
+    const { id } = req.params
+    const catego = category.findone(id);
+    res.json(catego);
+  } catch (error) {
+    next(error);
+  }
 });
 
-router.post('/', (req, res) => {
-  const body = req.body;
+//crea una nueva categoria
+router.post('/',
+validatorHandler(createCategorySchema, 'body'),
+ (req, res, next) => {
+  try {
+    const body = req.body;
   const newcategory = category.create(body);
   res.status(201).json(newcategory);
+  }catch(error) {
+    next(error);
+  }
 });
 
-router.patch('/:id', (req, res) => {
-  const { id } = req.params;
+//actualiza una categoria
+router.patch('/:id',
+//validar el id
+validatorHandler(getCategorySchema, 'params'),
+//validar los atributos
+validatorHandler(updateCategorySchema, 'body'),
+ (req, res, next) => {
+  try{
+    const { id } = req.params;
   const body = req.body;
   const categories = category.update(id, body);
   res.json(categories);
+  } catch(error){
+    next(error);
+  }
 });
 
-router.delete('/:id', (req, res) => {
-  const { id } = req.params;
+//elmina una categoria
+router.delete('/:id',
+validatorHandler(getCategorySchema, 'params'),
+ (req, res, next) => {
+  try{
+    const { id } = req.params;
   const categories = category.delete(id);
   res.json(categories);
+  }catch(error){
+    next(error);
+  }
 });
 
 module.exports = router;
