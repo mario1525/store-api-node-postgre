@@ -11,11 +11,10 @@ function routerApi(app){
  const router = express.Router();
 
  app.use('/api/v1',router);
-
  router.use('/orden', ordenRouter);
- router.use('/products', productsRouter);
+ router.use('/products', productsRouter);//ok
  router.use('/users', usersRouter);
- router.use('/categories',categoriesRouter );
+ router.use('/categories',categoriesRouter );//ok
 };
 
 module.exports = routerApi;
