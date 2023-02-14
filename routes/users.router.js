@@ -7,9 +7,9 @@ const { createUSerSchema, updateUserSchema, getUserSchema } = require('../schema
 
 
 // ruta con parametros opcionales
-router.get('/', (req, res, next) =>{
+router.get('/', async (req, res, next) =>{
   try{
-    const user = Users.find();
+    const user = await Users.find();
     res.json(user);
   }catch(error){
     next(error);

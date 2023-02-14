@@ -1,22 +1,14 @@
 const faker = require('faker');
+const pool = require('../libs/postgres')
 
 class serviceUsers {
 
   constructor() {
-    this.user = [];
-    this.generar();
+    this.pool = pool;
+    this.pool.on('error', (err) => console.error(err));
   }
 
-  generar(){
-    const limit = 50;
-    for(let i = 0; i < limit; i++ ){
-      this.user.push({
-        id: faker.datatype.uuid(),
-        name: faker.name.findName(),
-        Email: faker.internet.email(),
-      })
-    }
-  }
+  generar(){  }
 
   create(data) {
     const newUser = {
@@ -27,8 +19,10 @@ class serviceUsers {
     return newUser;
   }
 
-  find() {
-    return this.user;
+  async find() {
+    const query = 'select * FROM Usuario'
+    const rta = await this.pool.query(query);
+    return rta.rows;
   }
 
   findone(id) {
