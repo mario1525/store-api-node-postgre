@@ -23,7 +23,7 @@ app.use(cors(options));
 
 app.get('/', (req ,res) =>{
   res.json({
-    name: 'hello world desde docker '
+    name: 'hello world docker '
   });
 });
 
