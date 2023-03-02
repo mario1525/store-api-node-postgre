@@ -18,8 +18,8 @@ services:
     restart: always
     environment:
       - DATABASE_HOST=127.0.0.1
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root234
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres234
       - POSTGRES_DB=my_store
     ports:
       - "5432:5432"

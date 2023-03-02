@@ -1,5 +1,4 @@
-const faker = require('faker');
-const sequelize = require('../libs/sequelize')
+const { models } = require('./../libs/sequelize');
 
 class serviceUsers {
 
@@ -11,17 +10,11 @@ class serviceUsers {
   generar(){  }
 
   create(data) {
-    const newUser = {
-      id: faker.datatype.uuid(),
-      ...data
-    }
-    this.user.push(newUser);
-    return newUser;
+    return data;
   }
 
   async find() {
-    const query = 'select * FROM Usuario';
-    const [data, metadata] = await sequelize.query(query);
+    const [data, metadata] = await models.User.findAll();
     return {
       data,
       metadata
