@@ -1,50 +1,41 @@
+const { boom } = require('@hapi/boom');
 const { models } = require('./../libs/sequelize');
 
 class serviceUsers {
 
   constructor() {
-    this.user = [];
+      }
 
-  }
-
-  generar(){  }
-
-  create(data) {
-    return data;
+  async create(data) {
+    const newUser = new models.User.create(data);
+    return newUser;
   }
 
   async find() {
-    const [data, metadata] = await models.User.findAll();
+    const [data] = await models.User.findAll();
     return {
-      data,
-      metadata
+      data
     };
   }
 
-  findone(id) {
-    return this.user.find((item) => item.id === id);
+  async findone(id) {
+    const user = await models.User.findByPk(id);
+    if (!user){
+      boom.notFound('user not found ');
+     }
+    return user;
   }
 
-  update(id, changes) {
-    const index = this.user.findIndex(item => item.id === id);
-    if (index === -1) {
-      throw new Error('user not found');
-    }
-    const users = this.user[index];
-    this.products[index]= {
-      ...users,
-      ...changes
-    }
-    return this.user[index];
+  async update(id, changes) {
+    const user = await this.findone(id);
+    const rta = await user.update(changes);
+    return rta;
   }
 
-  delete(id) {
-    const index = this.user.findIndex(item => item.id === id);
-    if (index === -1) {
-      throw new Error('user not found');
-    }
-    this.user.splice(index, 1);
-    return { id }
+  async delete(id) {
+    const user = await models.User.findByPk(id);
+    await user.destroy();
+    return {id};
   }
 }
 

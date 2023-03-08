@@ -1,4 +1,4 @@
-const { Model, DataTypes } = require('sequelize');
+const { Model, DataTypes, Sequelize } = require('sequelize');
 
 const USER_TABLE = 'usuarios';
 
@@ -9,29 +9,40 @@ const UserSchema = {
     primaryKey: true,
     type: DataTypes.INTEGER,
   },
-  nombre: {
+  name: {
     allowNull: false,
     type: DataTypes.STRING,
   },
-  apellido: {
+  lastname: {
     allowNull: false,
     type: DataTypes.STRING,
   },
-  email: {
+  Email: {
     allowNull: false,
     type: DataTypes.STRING,
     unique: true,
   },
-  telefono: {
+  password: {
+    allowNull: false,
+    type: DataTypes.STRING,
+  },
+  cell: {
     allowNull: false,
     unique: true,
     type: DataTypes.INTEGER,
   },
+  createaAt: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    field: 'create_at',
+    defaultValue: Sequelize.now
+  }
 };
 
 class User extends Model {
-  static associate() {}
-
+  static associate() {
+    //models
+  }
   static config(sequelize) {
     return {
       sequelize,

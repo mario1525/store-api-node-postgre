@@ -6,7 +6,7 @@ const validatorHandler = require('../middlewares/validator.handler');
 const { createUSerSchema, updateUserSchema, getUserSchema } = require('../schemas/user.schemas');
 
 
-// ruta con parametros opcionales
+// retorna todos los usarios
 router.get('/', async (req, res, next) =>{
   try{
     const user = await Users.find();
@@ -16,6 +16,7 @@ router.get('/', async (req, res, next) =>{
   }
 });
 
+//retona un solo usuario
 router.get('/:id', validatorHandler(getUserSchema, 'params'),
  (req, res, next) => {
   try {
@@ -26,6 +27,7 @@ router.get('/:id', validatorHandler(getUserSchema, 'params'),
   }
 })
 
+//crear usario
 router.post('/', validatorHandler(createUSerSchema,'body'),
  (req, res, next) =>{
   try{
@@ -37,6 +39,7 @@ router.post('/', validatorHandler(createUSerSchema,'body'),
   }
 })
 
+//actualizar usuarios
 router.patch('/:id',
 validatorHandler(getUserSchema, 'params'),
 validatorHandler(updateUserSchema, 'body'),
@@ -51,6 +54,7 @@ validatorHandler(updateUserSchema, 'body'),
   }
 })
 
+//eliminar usarios
 router.delete('/:id',
 validatorHandler(getUserSchema, 'params'),
  (req, res, next ) =>{
