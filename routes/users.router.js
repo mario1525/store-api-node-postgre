@@ -21,7 +21,7 @@ router.get('/:id', validatorHandler(getUserSchema, 'params'),
  (req, res, next) => {
   try {
     const { id } = req.params;
-  res.json(Users.findOne(id));
+  res.json(Users.findone(id));
   }catch(error){
     next(error);
   }

@@ -1,8 +1,8 @@
 const { Model, DataTypes } = require('sequelize');
 
-const USER_TABLE = 'users';
+const PRODUCT_TABLE = 'product';
 
-const UserSchema = {
+const ProductSchema = {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -13,38 +13,33 @@ const UserSchema = {
     allowNull: false,
     type: DataTypes.STRING,
   },
-  lastname: {
+  precio: {
+    allowNull: false,
+    type: DataTypes.INTEGER,
+  },
+  detalles: {
     allowNull: false,
     type: DataTypes.STRING,
   },
-  Email: {
+  idCategoria: {
     allowNull: false,
-    type: DataTypes.STRING,
-    unique: true,
-  },
-  password: {
-    allowNull: false,
-    type: DataTypes.STRING,
-  },
-  cell: {
-    allowNull: false,
-    unique: true,
-    type: DataTypes.BIGINT,
+    field: 'id_category',
+    type: DataTypes.INTEGER,
   },
 };
 
-class User extends Model {
+class Product extends Model {
   static associate() {
-    //models
+    //
   }
   static config(sequelize) {
     return {
       sequelize,
-      tableName: USER_TABLE,
-      modelName: 'User',
+      tableName: PRODUCT_TABLE,
+      modelName: 'Product',
       timestamps: false,
     };
   }
 }
 
-module.exports = { USER_TABLE, UserSchema, User };
+module.exports = { PRODUCT_TABLE, ProductSchema, Product };

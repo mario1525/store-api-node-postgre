@@ -1,62 +1,50 @@
-//codigo para desarrollo
-const faker = require('faker');
+const { boom } = require('@hapi/boom');
+const { models } = require('./../libs/sequelize');
 
 class categoryservices {
+  constructor() {}
 
-  constructor(){
-    this.category = [];
-    this.generate();
+  async create(data) {
+    const newcategory = await models.Category.create(data);
+    return {
+      newcategory,
+    };
   }
 
-  generate(){
-    const limit = 10;
-    for (let i = 0; i< limit; i++ ){
-      this.category.push({
-        id: faker.datatype.uuid(),
-        name: faker.commerce.productName(),
-      })
+  async find() {
+    const data = await models.Category.findAll();
+    return {
+      data,
+    };
+  }
+
+  async findone(id) {
+    const category = await models.Category.findByPk(id);
+    if (!category) {
+      boom.notFound('category not found ');
     }
+    return {
+      category,
+    };
   }
 
-  create(data){
-    const newcategory = {
-      id: faker.datatype.uuid(),
-      ...data
+  async update(id, changes) {
+    const category = await models.Category.findByPk(id);
+    if (!category) {
+      boom.notFound('category not found ');
     }
-    this.category.push(newcategory);
-    return newcategory;
+    const rta = await category.update(changes);
+    return {
+      rta,
+    };
   }
 
-  find(){
-    return this.category;
+  async delete(id) {
+    const category = await models.Category.findByPk(id);
+    await category.destroy();
+    return {
+      category,
+    };
   }
-
-  findone(id){
-    return this.category.find((item) => item.id === id);
-  }
-
-  update(id , changes){
-    const index = this.category.findIndex(item => item.id === id);
-    if (index === -1){
-      throw new Error('category not found');
-    }
-    const category = this.category.findIndex(item => item.id === id);
-    this.category[index] ={
-      ...category,
-      ...changes,
-    }
-    return this.category[index];
-  }
-
-  delete(id){
-    const index = this.category.findIndex(item => item.id === id );
-    if(index === -1){
-      throw new Error('category not found');
-    }
-    this.category.splice(index, 1);
-    return {id}
-  }
-
 }
-
 module.exports = categoryservices;
