@@ -1,6 +1,5 @@
 function logErrors (err, req, res, next) {
-  console.error(err);
-  next(err);
+   next(err);
 }
 
 function errorHandler(err, req, res) {

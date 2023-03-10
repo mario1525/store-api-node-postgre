@@ -13,7 +13,7 @@ const ProductSchema = {
     allowNull: false,
     type: DataTypes.STRING,
   },
-  precio: {
+  price: {
     allowNull: false,
     type: DataTypes.INTEGER,
   },

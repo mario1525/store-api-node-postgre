@@ -16,11 +16,11 @@ const InventarioSchema = {
   },
   cantidad: {
     allowNull: false,
-    type: DataTypes.INTEGE,
+    type: DataTypes.INTEGER,
   },
 };
 
-class Invantario extends Model {
+class Inventario extends Model {
   static associate() {
     //models
   }
@@ -34,4 +34,4 @@ class Invantario extends Model {
   }
 }
 
-module.exports = { INVENTARIO_TABLE, InventarioSchema, Invantario };
+module.exports = { INVENTARIO_TABLE, InventarioSchema, Inventario };

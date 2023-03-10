@@ -4,13 +4,9 @@ const sequelize = require('../libs/sequelize');
 
 class productservice {
 
-  constructor() {
-    this.products = [];
-    this.generate();
-  };
+  constructor() {};
 
-  generate() {
-  }
+
 
  async create(data) {
 

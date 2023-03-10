@@ -17,17 +17,17 @@ class serviceUsers {
       data,
     };
   }
-
+  //ok
   async findone(id) {
     const user = await models.User.findByPk(id);
-    if (!user) {
+    if (user == null) {
       boom.notFound('user not found ');
     }
     return {
       user,
     };
   }
-
+  //ok
   async update(id, changes) {
     const user = await models.User.findByPk(id);
     if (!user) {
@@ -35,15 +35,18 @@ class serviceUsers {
     }
     const rta = await user.update(changes);
     return {
-      rta
+      rta,
     };
   }
 
   async delete(id) {
     const user = await models.User.findByPk(id);
+    if (!user) {
+      boom.notFound('user not found ');
+    }
     await user.destroy();
     return {
-      user
+      user,
     };
   }
 }
