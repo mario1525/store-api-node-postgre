@@ -5,17 +5,23 @@ const validatorHandler = require('./../middlewares/validator.handler');
 const {
   createOrdenschema,
   updateOrdenschema,
-  getOrdenschema
+  getOrdenschema,
 } = require('../schemas/orden.schema');
 
 const service = new servisorden();
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.json([]);
+router.get('/', async (req, res, next) => {
+  try {
+    const data = await service.find();
+    res.json(data);
+  } catch (error) {
+    next(error);
+  }
 });
 
-router.get('/:id',
+router.get(
+  '/:id',
   validatorHandler(getOrdenschema, 'params'),
   async (req, res, next) => {
     try {

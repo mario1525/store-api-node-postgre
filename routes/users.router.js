@@ -73,9 +73,8 @@ router.delete(
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      const body = req.body;
-      const user = await Users.delete(id, body);
-      res.json(user);
+      await Users.delete(id);
+      res.json({ id });
     } catch (error) {
       next(error);
     }

@@ -3,10 +3,7 @@ const boom = require('@hapi/boom');
 const sequelize = require('../libs/sequelize');
 
 class productservice {
-
   constructor() {};
-
-
 
  async create(data) {
 

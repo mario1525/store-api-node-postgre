@@ -38,7 +38,7 @@ class serviceUsers {
       rta,
     };
   }
-
+//ok
   async delete(id) {
     const user = await models.User.findByPk(id);
     if (!user) {

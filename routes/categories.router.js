@@ -6,9 +6,9 @@ const validatorHandler = require('../middlewares/validator.handler');
 const {createCategorySchema, updateCategorySchema, getCategorySchema} = require('../schemas/category.schema');
 
 //devuelve todas las categorias
-router.get('/', (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
-    const categories = category.find();
+    const categories = await category.find();
     res.json(categories);
   } catch (error) {
     next(error);
@@ -18,10 +18,10 @@ router.get('/', (req, res, next) => {
 //devuelve una sola categoria
 router.get('/:id',
 validatorHandler(getCategorySchema, 'params'),
- (req, res, next ) => {
+ async (req, res, next ) => {
   try {
     const { id } = req.params
-    const catego = category.findone(id);
+    const catego = await category.findone(id);
     res.json(catego);
   } catch (error) {
     next(error);
@@ -31,10 +31,10 @@ validatorHandler(getCategorySchema, 'params'),
 //crea una nueva categoria
 router.post('/',
 validatorHandler(createCategorySchema, 'body'),
- (req, res, next) => {
+ async (req, res, next) => {
   try {
     const body = req.body;
-  const newcategory = category.create(body);
+  const newcategory = await category.create(body);
   res.status(201).json(newcategory);
   }catch(error) {
     next(error);
@@ -47,11 +47,11 @@ router.patch('/:id',
 validatorHandler(getCategorySchema, 'params'),
 //validar los atributos
 validatorHandler(updateCategorySchema, 'body'),
- (req, res, next) => {
+ async (req, res, next) => {
   try{
     const { id } = req.params;
   const body = req.body;
-  const categories = category.update(id, body);
+  const categories = await category.update(id, body);
   res.json(categories);
   } catch(error){
     next(error);
@@ -61,11 +61,11 @@ validatorHandler(updateCategorySchema, 'body'),
 //elmina una categoria
 router.delete('/:id',
 validatorHandler(getCategorySchema, 'params'),
- (req, res, next) => {
+async (req, res, next) => {
   try{
     const { id } = req.params;
-  const categories = category.delete(id);
-  res.json(categories);
+   await  category.delete(id);
+  res.json({ id });
   }catch(error){
     next(error);
   }
