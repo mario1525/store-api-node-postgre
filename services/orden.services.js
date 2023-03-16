@@ -1,21 +1,33 @@
-
+const { boom } = require('@hapi/boom');
+const { models } = require('./../libs/sequelize');
 
 class servisorden {
-
-  constructor(){
-    this.orden = [];
-  }
+  constructor() {}
 
   async create(data) {
-    return data;
+    const newOrden = await models.Orden.create(data);
+    return newOrden;
   }
   async find() {
+    const data = await models.Orden.findAll();
+    return {
+      data,
+    };
   }
   async findOne(id) {
-    return id;
+    const orden = await models.Orden.findByPk(id);
+    if (!orden) {
+      boom.notFound('orden not found ');
+    }
+    return {
+      orden,
+    };
   }
   async update(id, changes) {
-    return id , changes;
+    const rta = await this.findOne(id).update(changes);
+    return {
+      rta,
+    };
   }
   async delete(id) {
     return id;

@@ -1,57 +1,58 @@
-
-const boom = require('@hapi/boom');
-const sequelize = require('../libs/sequelize');
+const { boom } = require('@hapi/boom');
+const { models } = require('../libs/sequelize');
 
 class productservice {
-  constructor() {};
+  constructor() {}
 
- async create(data) {
-
-    return data;
+  async create(data) {
+   const newCategory = await models.Category.create(data.Category);
+    const newProduct = await models.Product.create({
+      ...data,
+      idCategory: newCategory.id
+    });
+    return {
+      newProduct,
+    };
   }
 
   async find() {
-    const query = 'select * from productos';
-    const [data] = await sequelize.query(query);
+    const data = await models.Product.findAll({
+      include: ['category']
+    });
     return {
-      data
+      data,
     };
   }
 
   async findOne(id) {
-    const product = this.products.find(item => item.id === id);
+    const product = await models.Product.findByPk(id);
     if (!product) {
       throw boom.notFound('product not found');
     }
-    if (product.isBlock) {
-      throw boom.conflict('product is block');
-    }
-    return product;
+    return {
+      product,
+    };
   }
 
   async update(id, changes) {
-    const index = this.products.findIndex(item => item.id === id);
-    if (index === -1) {
-      throw boom.notFound('product not found');
+    const product = await models.Product.findByPk(id);
+    if (!product) {
+      boom.notFound('product not found ');
     }
-    const product = this.products[index];
-    this.products[index] = {
-      ...product,
-      ...changes
+    const rta = await product.update(changes);
+    return {
+      rta,
     };
-    return this.products[index];
   }
 
   async delete(id) {
-    const index = this.products.findIndex(item => item.id === id);
-    if (index === -1) {
-      throw boom.notFound('product not found');
+    const product = await models.Product.findByPk(id);
+    if (!product) {
+       boom.notFound('product not found');
     }
-    this.products.splice(index, 1);
+    await product.destroy();
     return { id };
   }
-
 }
-
 
 module.exports = productservice;

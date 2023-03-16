@@ -18,6 +18,10 @@ function setupModels(sequelize) {
   ProducOreden.init(PrductorSchema, ProducOreden.config(sequelize));
   //model inventario
   Inventario.init(InventarioSchema, Inventario.config(sequelize));
+
+  //asociate
+  Category.associate(sequelize.models);
+  Product.associate(sequelize.models);
 }
 
 module.exports = setupModels;
