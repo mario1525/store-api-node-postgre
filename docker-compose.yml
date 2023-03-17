@@ -1,6 +1,5 @@
 version: "3.8"
 
-
 services:
   my_store:
     build: .
@@ -11,7 +10,8 @@ services:
 
     depends_on:
       - postgres
-    command: npx nodemon index.js
+    command: npm run dev
+
 
   postgres:
     image: postgres

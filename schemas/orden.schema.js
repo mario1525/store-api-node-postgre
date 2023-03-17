@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const id = Joi.number();
+const id = Joi.number().integer();
 const id_usuario = Joi.number();
 const date = Joi.date().greater('now');
 

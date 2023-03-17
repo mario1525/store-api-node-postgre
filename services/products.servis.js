@@ -5,11 +5,7 @@ class productservice {
   constructor() {}
 
   async create(data) {
-   const newCategory = await models.Category.create(data.Category);
-    const newProduct = await models.Product.create({
-      ...data,
-      idCategory: newCategory.id
-    });
+    const newProduct = await models.Product.create(data);
     return {
       newProduct,
     };
@@ -17,7 +13,7 @@ class productservice {
 
   async find() {
     const data = await models.Product.findAll({
-      include: ['category']
+      include: ['catego']
     });
     return {
       data,

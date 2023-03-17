@@ -1,6 +1,6 @@
 const { User, UserSchema } = require('./user.models');
-const { Category, CategorySchema } = require('./categori.model');
 const { Orden, OrdenSchema } = require('./orden.model');
+const { Category, CategorySchema } = require('./categori.model');
 const { Product, ProductSchema } = require('./product.model');
 const { ProducOreden, PrductorSchema } = require('./productOrden.model');
 const { Inventario, InventarioSchema } = require('./inventario.model');
@@ -19,7 +19,7 @@ function setupModels(sequelize) {
   //model inventario
   Inventario.init(InventarioSchema, Inventario.config(sequelize));
 
-  //asociate
+  //associate
   Category.associate(sequelize.models);
   Product.associate(sequelize.models);
 }
