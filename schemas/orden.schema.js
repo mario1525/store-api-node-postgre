@@ -1,17 +1,16 @@
 const Joi = require('joi');
 
 const id = Joi.number().integer();
-const id_usuario = Joi.number();
-const date = Joi.date().greater('now');
+const userId = Joi.number();
+
 
 const createOrdenschema = Joi.object({
-  id_usuario: id_usuario.required(),
-  fecha: date.required(),
+  userId: userId.required(),
 });
 
 const updateOrdenschema = Joi.object({
-  id_usuario: id_usuario,
-  fecha: date,
+  userId: userId,
+
 });
 
 const getOrdenschema = Joi.object({

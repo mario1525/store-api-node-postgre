@@ -22,6 +22,9 @@ function setupModels(sequelize) {
   //associate
   Category.associate(sequelize.models);
   Product.associate(sequelize.models);
+  User.associate(sequelize.models);
+  Orden.associate(sequelize.models);
+
 }
 
 module.exports = setupModels;

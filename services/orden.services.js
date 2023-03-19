@@ -6,7 +6,9 @@ class servisorden {
 
   async create(data) {
     const newOrden = await models.Orden.create(data);
-    return newOrden;
+    return {
+      newOrden,
+    };
   }
   async find() {
     const data = await models.Orden.findAll();

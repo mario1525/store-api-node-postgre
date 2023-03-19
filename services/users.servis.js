@@ -12,7 +12,8 @@ class serviceUsers {
   }
   //ok
   async find() {
-    const data = await models.User.findAll();
+    const data = await models.User.findAll({
+    });
     return {
       data,
     };
