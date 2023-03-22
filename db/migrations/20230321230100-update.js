@@ -10,7 +10,7 @@ const { PerfilSchema, PERFIL_TABLE } = require('./../models/perfil.model');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface) {
+  async up (queryInterface) {
     await queryInterface.createTable(USER_TABLE, UserSchema);
     await queryInterface.createTable(CATEGORY_TABLE, CategorySchema);
     await queryInterface.createTable(ORDEN_TABLE, OrdenSchema);
@@ -40,5 +40,5 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-  },
+  }
 };

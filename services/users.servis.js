@@ -5,15 +5,16 @@ class serviceUsers {
   constructor() {}
   //ok
   async create(data) {
-    const newUser = await models.User.create(data);
+    const newUser = await models.User.create(data, {
+      include: ['perfil'],
+    });
     return {
       newUser,
     };
   }
   //ok
   async find() {
-    const data = await models.User.findAll({
-    });
+    const data = await models.User.findAll({});
     return {
       data,
     };
@@ -39,7 +40,7 @@ class serviceUsers {
       rta,
     };
   }
-//ok
+  //ok
   async delete(id) {
     const user = await models.User.findByPk(id);
     if (!user) {

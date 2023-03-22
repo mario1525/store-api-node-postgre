@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 
+const { PERFIL_TABLE } = require('./perfil.model');
 const USER_TABLE = 'users';
 
 const UserSchema = {
@@ -17,29 +18,33 @@ const UserSchema = {
     allowNull: false,
     type: DataTypes.STRING,
   },
-  Email: {
-    allowNull: false,
-    type: DataTypes.STRING,
-    unique: true,
-  },
-  password: {
-    allowNull: false,
-    type: DataTypes.STRING,
-  },
   cell: {
     allowNull: false,
     unique: true,
     type: DataTypes.BIGINT,
   },
+  perfilId: {
+    allowNull: false,
+    field: 'perfil_id',
+    type: DataTypes.INTEGER,
+    unique: true,
+    references: {
+      model: PERFIL_TABLE,
+      key: 'id',
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL',
+  },
 };
 
 class User extends Model {
   static associate(models) {
+    this.belongsTo(models.Perfil, {as: 'perfil'});
     this.hasMany(models.Orden, {
       as: 'ordenes',
-      foreignKey: 'userId'
-    })
-  }
+      foreignKey: 'userId',
+    });
+    }
   static config(sequelize) {
     return {
       sequelize,

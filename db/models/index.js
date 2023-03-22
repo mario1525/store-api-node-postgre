@@ -1,4 +1,5 @@
 const { User, UserSchema } = require('./user.models');
+const { Perfil, PerfilSchema } = require('./perfil.model');
 const { Orden, OrdenSchema } = require('./orden.model');
 const { Category, CategorySchema } = require('./categori.model');
 const { Product, ProductSchema } = require('./product.model');
@@ -18,12 +19,15 @@ function setupModels(sequelize) {
   ProducOreden.init(PrductorSchema, ProducOreden.config(sequelize));
   //model inventario
   Inventario.init(InventarioSchema, Inventario.config(sequelize));
+  //model perfil
+  Perfil.init(PerfilSchema, Perfil.config(sequelize));
 
   //associate
   Category.associate(sequelize.models);
   Product.associate(sequelize.models);
   User.associate(sequelize.models);
   Orden.associate(sequelize.models);
+  Perfil.associate(sequelize.models);
 
 }
 

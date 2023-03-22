@@ -13,7 +13,7 @@ class productservice {
 
   async find() {
     const data = await models.Product.findAll({
-      include: ['category']
+      include: ['category'],
     });
     return {
       data,
@@ -44,7 +44,7 @@ class productservice {
   async delete(id) {
     const product = await models.Product.findByPk(id);
     if (!product) {
-       boom.notFound('product not found');
+      boom.notFound('product not found');
     }
     await product.destroy();
     return { id };
