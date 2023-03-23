@@ -1,58 +1,68 @@
-const { Model, DataTypes } = require('sequelize');
+const { Model, DataTypes, Sequelize } = require('sequelize');
 
-const { PERFIL_TABLE } = require('./perfil.model');
+const { PERFIL_TABLE } = require('./perfil.model')
+
 const USER_TABLE = 'users';
 
-const UserSchema = {
+const UserSchema =  {
   id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.INTEGER,
+    type: DataTypes.INTEGER
   },
   name: {
     allowNull: false,
     type: DataTypes.STRING,
   },
-  lastname: {
+  lastName: {
     allowNull: false,
     type: DataTypes.STRING,
+    field: 'last_name',
   },
-  cell: {
-    allowNull: false,
-    unique: true,
-    type: DataTypes.BIGINT,
+  phone: {
+    allowNull: true,
+    type: DataTypes.STRING,
   },
-  perfilId: {
+  createdAt: {
     allowNull: false,
+    type: DataTypes.DATE,
+    field: 'created_at',
+    defaultValue: Sequelize.NOW,
+  },
+  perfilId:{
     field: 'perfil_id',
+    allowNull: false,
     type: DataTypes.INTEGER,
     unique: true,
     references: {
       model: PERFIL_TABLE,
-      key: 'id',
+      key: 'id'
     },
     onUpdate: 'CASCADE',
-    onDelete: 'SET NULL',
-  },
-};
+    onDelete: 'SET NULL'
+  }
+}
 
 class User extends Model {
+
   static associate(models) {
     this.belongsTo(models.Perfil, {as: 'perfil'});
-    this.hasMany(models.Orden, {
-      as: 'ordenes',
-      foreignKey: 'userId',
+    this.hasMany(models.Order, {
+      as: 'orders',
+      foreignKey: 'userId'
     });
-    }
+  }
+
   static config(sequelize) {
     return {
       sequelize,
       tableName: USER_TABLE,
-      modelName: 'User',
-      timestamps: false,
-    };
+      modelName: 'Users',
+      timestamps: false
+    }
   }
 }
 
-module.exports = { USER_TABLE, UserSchema, User };
+module.exports = { User, UserSchema, USER_TABLE };
+

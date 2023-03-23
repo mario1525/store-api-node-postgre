@@ -14,6 +14,8 @@ class productservice {
   async find() {
     const data = await models.Product.findAll({
       include: ['category'],
+      offset: 0,
+      limit: 10,
     });
     return {
       data,

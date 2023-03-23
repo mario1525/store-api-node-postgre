@@ -1,30 +1,41 @@
-const { Model, DataTypes } = require('sequelize');
+const { Model, DataTypes, Sequelize } = require('sequelize');
 
-const PERFIL_TABLE = 'perfil';
+const PERFIL_TABLE = 'users';
 
 const PerfilSchema = {
   id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.INTEGER,
+    type: DataTypes.INTEGER
   },
-  Email: {
+  email: {
     allowNull: false,
     type: DataTypes.STRING,
     unique: true,
   },
   password: {
     allowNull: false,
-    type: DataTypes.STRING,
+    type: DataTypes.STRING
   },
-};
+  role: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    defaultValue: 'customer'
+  },
+  createdAt: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    field: 'create_at',
+    defaultValue: Sequelize.NOW
+  }
+}
 
 class Perfil extends Model {
   static associate(models) {
     this.hasOne(models.User, {
-      as: 'usuario',
-      foreignKey: 'perfilId'
+      as: 'user',
+      foreignKey: 'userId'
     });
   }
 
@@ -33,9 +44,10 @@ class Perfil extends Model {
       sequelize,
       tableName: PERFIL_TABLE,
       modelName: 'Perfil',
-      Timetamps: false,
-    };
+      timestamps: false
+    }
   }
 }
 
-module.exports = { Perfil, PerfilSchema, PERFIL_TABLE };
+
+module.exports = { PERFIL_TABLE, PerfilSchema, Perfil }
