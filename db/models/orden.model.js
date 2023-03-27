@@ -9,7 +9,7 @@ const OrderSchema = {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
   },
   userId: {
     field: 'user_id',
@@ -17,10 +17,10 @@ const OrderSchema = {
     type: DataTypes.INTEGER,
     references: {
       model: USER_TABLE,
-      key: 'id'
+      key: 'id',
     },
     onUpdate: 'CASCADE',
-    onDelete: 'SET NULL'
+    onDelete: 'SET NULL',
   },
   createdAt: {
     allowNull: false,
@@ -33,17 +33,15 @@ const OrderSchema = {
     get() {
       if (this.items.length > 0) {
         return this.items.reduce((total, item) => {
-          return total + (item.price * item.OrderProduct.amount);
+          return total + item.price * item.OrderProduct.amount;
         }, 0);
       }
       return 0;
-    }
-  }
-}
-
+    },
+  },
+};
 
 class Order extends Model {
-
   static associate(models) {
     this.belongsTo(models.User, {
       as: 'user',
@@ -52,7 +50,7 @@ class Order extends Model {
       as: 'items',
       through: models.OrderProduct,
       foreignKey: 'orderId',
-      otherKey: 'productId'
+      otherKey: 'productId',
     });
   }
 
@@ -61,8 +59,8 @@ class Order extends Model {
       sequelize,
       tableName: ORDER_TABLE,
       modelName: 'Order',
-      timestamps: false
-    }
+      timestamps: false,
+    };
   }
 }
 

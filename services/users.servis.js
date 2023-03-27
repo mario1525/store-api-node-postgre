@@ -1,56 +1,40 @@
-const { boom } = require('@hapi/boom');
-const { models } = require('./../libs/sequelize');
+const boom = require('@hapi/boom');
+const { models } = require('../libs/sequelize');
 
-class serviceUsers {
+class CustomerService {
   constructor() {}
-  //ok
-  async create(data) {
-    const newUser = await models.User.create(data, {
-      include: ['perfil'],
-    });
-    return {
-      newUser,
-    };
-  }
-  //ok
+
   async find() {
-    const data = await models.User.findAll({});
-    return {
-      data,
-    };
+    const rta = await models.User.findAll({
+      include: ['perfil']
+    });
+    return rta;
   }
-  //ok
-  async findone(id) {
+
+  async findOne(id) {
     const user = await models.User.findByPk(id);
-    if (user == null) {
-      boom.notFound('user not found ');
+    if (!user) {
+      throw boom.notFound('customer not found');
     }
-    return {
-      user,
-    };
+    return user;
   }
-  //ok
+
+  async create(data) {
+    const newUser = await models.User.create(data);
+    return newUser;
+  }
+
   async update(id, changes) {
-    const user = await models.User.findByPk(id);
-    if (!user) {
-      boom.notFound('user not found ');
-    }
-    const rta = await user.update(changes);
-    return {
-      rta,
-    };
+    const model = await this.findOne(id);
+    const rta = await model.update(changes);
+    return rta;
   }
-  //ok
+
   async delete(id) {
-    const user = await models.User.findByPk(id);
-    if (!user) {
-      boom.notFound('user not found ');
-    }
-    await user.destroy();
-    return {
-      user,
-    };
+    const model = await this.findOne(id);
+    await model.destroy();
+    return { rta: true };
   }
 }
 
-module.exports = serviceUsers;
+module.exports = CustomerService;

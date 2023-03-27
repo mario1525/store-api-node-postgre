@@ -1,15 +1,15 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
-const { PERFIL_TABLE } = require('./perfil.model')
+const { PERFIL_TABLE } = require('./perfil.model');
 
 const USER_TABLE = 'users';
 
-const UserSchema =  {
+const UserSchema = {
   id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
   },
   name: {
     allowNull: false,
@@ -30,27 +30,26 @@ const UserSchema =  {
     field: 'created_at',
     defaultValue: Sequelize.NOW,
   },
-  perfilId:{
+  perfilId: {
     field: 'perfil_id',
     allowNull: false,
     type: DataTypes.INTEGER,
     unique: true,
     references: {
       model: PERFIL_TABLE,
-      key: 'id'
+      key: 'id',
     },
     onUpdate: 'CASCADE',
-    onDelete: 'SET NULL'
-  }
-}
+    onDelete: 'SET NULL',
+  },
+};
 
 class User extends Model {
-
   static associate(models) {
-    this.belongsTo(models.Perfil, {as: 'perfil'});
+    this.belongsTo(models.Perfil, { as: 'perfil' });
     this.hasMany(models.Order, {
       as: 'orders',
-      foreignKey: 'userId'
+      foreignKey: 'userId',
     });
   }
 
@@ -59,10 +58,9 @@ class User extends Model {
       sequelize,
       tableName: USER_TABLE,
       modelName: 'Users',
-      timestamps: false
-    }
+      timestamps: false,
+    };
   }
 }
 
 module.exports = { User, UserSchema, USER_TABLE };
-

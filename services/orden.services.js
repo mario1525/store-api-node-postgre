@@ -5,10 +5,13 @@ class servisorden {
   constructor() {}
 
   async create(data) {
-    const newOrden = await models.Orden.create(data);
-    return {
-      newOrden,
-    };
+    const newOrder = await models.Order.create(data);
+    return newOrder;
+  }
+
+  async addItem(data) {
+    const newItem = await models.OrderProduct.create(data);
+    return newItem;
   }
   async find() {
     const data = await models.Orden.findAll();
