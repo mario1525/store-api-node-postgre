@@ -1,8 +1,8 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
-const PERFIL_TABLE = 'perfil';
+const USER_TABLE = 'users';
 
-const PerfilSchema = {
+const UserSchema = {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -15,6 +15,11 @@ const PerfilSchema = {
     unique: true,
   },
   password: {
+    allowNull: false,
+    type: DataTypes.STRING,
+  },
+  recoveryToken: {
+    field: 'recovery_token',
     allowNull: false,
     type: DataTypes.STRING,
   },
@@ -31,22 +36,22 @@ const PerfilSchema = {
   },
 };
 
-class Perfil extends Model {
+class User extends Model {
   static associate(models) {
-    this.hasOne(models.User, {
-      as: 'user',
-      foreignKey: 'perfilIds',
+    this.hasOne(models.Customer, {
+      as: 'customer',
+      foreignKey: 'userId',
     });
   }
 
   static config(sequelize) {
     return {
       sequelize,
-      tableName: PERFIL_TABLE,
-      modelName: 'Perfil',
+      tableName: USER_TABLE,
+      modelName: 'User',
       timestamps: false,
     };
   }
 }
 
-module.exports = {Perfil, PERFIL_TABLE, PerfilSchema };
+module.exports = { USER_TABLE, UserSchema, User };
