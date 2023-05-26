@@ -22,8 +22,9 @@ const InventarioSchema = {
 
 class Inventario extends Model {
   static associate() {
-    //models
+    // models
   }
+
   static config(sequelize) {
     return {
       sequelize,

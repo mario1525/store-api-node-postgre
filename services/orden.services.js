@@ -1,5 +1,5 @@
 const { boom } = require('@hapi/boom');
-const { models } = require('./../libs/sequelize');
+const { models } = require('../libs/sequelize');
 
 class servisorden {
   constructor() {}
@@ -13,12 +13,14 @@ class servisorden {
     const newItem = await models.OrderProduct.create(data);
     return newItem;
   }
+
   async find() {
     const data = await models.Orden.findAll();
     return {
       data,
     };
   }
+
   async findOne(id) {
     const orden = await models.Orden.findByPk(id);
     if (!orden) {
@@ -28,12 +30,14 @@ class servisorden {
       orden,
     };
   }
+
   async update(id, changes) {
     const rta = await this.findOne(id).update(changes);
     return {
       rta,
     };
   }
+
   async delete(id) {
     return id;
   }

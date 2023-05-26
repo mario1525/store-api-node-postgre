@@ -1,6 +1,5 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 const { CUSTOMER_TABLE } = require('./customer.model');
-const { SORTEO_TABLE } = require('./sorteo.model');
 
 const ORDER_TABLE = 'orders';
 
@@ -22,38 +21,37 @@ const OrderSchema = {
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL',
   },
-  precio: {
-    allowNull: false,
-    type: DataTypes.BIGINT,
-  },
-  sorteoId: {
-    field: 'sorteo_id',
-    allowNull: false,
-    type: DataTypes.INTEGER,
-    references: {
-      model: SORTEO_TABLE,
-      key: 'id',
-    },
-    onUpdate: 'CASCADE',
-    onDelete: 'SET NULL',
-  },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
     field: 'created_at',
     defaultValue: Sequelize.NOW,
   },
+  total: {
+    type: DataTypes.VIRTUAL,
+    get() {
+      if (this.items.length > 0) {
+        return this.items.reduce(
+          (total, item) => total + item.price * item.OrderProduct.amount,
+          0,
+        );
+      }
+      return 0;
+    },
+  },
 };
 
 class Order extends Model {
   static associate(models) {
+    this.belongsTo(models.Customer, {
+      as: 'customer',
+    });
     this.belongsToMany(models.Product, {
       as: 'items',
       through: models.OrderProduct,
       foreignKey: 'orderId',
       otherKey: 'productId',
     });
-    this.belongsTo(models.Customer, { as: 'custome' });
   }
 
   static config(sequelize) {

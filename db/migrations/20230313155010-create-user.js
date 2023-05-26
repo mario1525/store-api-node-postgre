@@ -1,12 +1,10 @@
-'use strict';
-
-const { UserSchema, USER_TABLE } = require('./../models/user.models');
-const { CategorySchema, CATEGORY_TABLE } = require('./../models/categori.model');
-const { OrderSchema, ORDER_TABLE } = require('./../models/orden.model');
-const { OrderProductSchema, ORDER_PRODUCT_TABLE } = require('./../models/productOrden.model');
-const { ProductSchema, PRODUCT_TABLE } = require('./../models/product.model');
-const { InventarioSchema, INVENTARIO_TABLE } = require('./../models/inventario.model');
-const { PerfilSchema, PERFIL_TABLE } = require('./../models/perfil.model');
+const { UserSchema, USER_TABLE } = require('../models/user.models');
+const { CategorySchema, CATEGORY_TABLE } = require('../models/categori.model');
+const { OrderSchema, ORDER_TABLE } = require('../models/orden.model');
+const { OrderProductSchema, ORDER_PRODUCT_TABLE } = require('../models/productOrden.model');
+const { ProductSchema, PRODUCT_TABLE } = require('../models/product.model');
+const { InventarioSchema, INVENTARIO_TABLE } = require('../models/inventario.model');
+const { PerfilSchema, PERFIL_TABLE } = require('../models/perfil.model');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -14,7 +12,7 @@ module.exports = {
     await queryInterface.createTable(USER_TABLE, UserSchema);
     await queryInterface.createTable(CATEGORY_TABLE, CategorySchema);
     await queryInterface.createTable(ORDER_TABLE, OrderSchema);
-    await queryInterface.createTable(PERFIL_TABLE,PerfilSchema);
+    await queryInterface.createTable(PERFIL_TABLE, PerfilSchema);
     await queryInterface.createTable(ORDER_PRODUCT_TABLE, OrderProductSchema);
     await queryInterface.createTable(PRODUCT_TABLE, ProductSchema);
     await queryInterface.createTable(INVENTARIO_TABLE, InventarioSchema);

@@ -12,7 +12,7 @@ class PerfilService {
 
   async find() {
     const rta = await models.Perfil.findAll({
-      include: ['user']
+      include: ['user'],
     });
     return rta;
   }

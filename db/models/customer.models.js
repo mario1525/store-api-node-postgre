@@ -67,4 +67,4 @@ class Customer extends Model {
   }
 }
 
-module.exports = { Customer, CustomerSchema, CUSTOMER_TABLE }
+module.exports = { Customer, CustomerSchema, CUSTOMER_TABLE };
