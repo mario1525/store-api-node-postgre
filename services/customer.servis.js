@@ -5,23 +5,23 @@ class CustomerService {
   constructor() {}
 
   async find() {
-    const rta = await models.User.findAll({
-      include: ['perfil'],
+    const rta = await models.Customer.findAll({
+      include: ['user'],
     });
     return rta;
   }
 
   async findOne(id) {
-    const user = await models.User.findByPk(id);
-    if (!user) {
+    const customer = await models.Customer.findByPk(id);
+    if (!customer) {
       throw boom.notFound('customer not found');
     }
-    return user;
+    return customer;
   }
 
   async create(data) {
-    const newUser = await models.User.create(data);
-    return newUser;
+    const newCustomer = await models.Customer.create(data);
+    return newCustomer;
   }
 
   async update(id, changes) {

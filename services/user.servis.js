@@ -2,23 +2,21 @@ const boom = require('@hapi/boom');
 
 const { models } = require('../libs/sequelize');
 
-class PerfilService {
-  constructor() {}
-
+class UserService {
   async create(data) {
-    const newPerfil = await models.Perfil.create(data);
-    return newPerfil;
+    const newUser = await models.User.create(data);
+    return newUser;
   }
 
   async find() {
-    const rta = await models.Perfil.findAll({
+    const rta = await models.User.findAll({
       include: ['user'],
     });
     return rta;
   }
 
   async findOne(id) {
-    const user = await models.Perfil.findByPk(id);
+    const user = await models.User.findByPk(id);
     if (!user) {
       throw boom.notFound('user not found');
     }
@@ -26,16 +24,16 @@ class PerfilService {
   }
 
   async update(id, changes) {
-    const perfil = await this.findOne(id);
-    const rta = await perfil.update(changes);
+    const user = await this.findOne(id);
+    const rta = await user.update(changes);
     return rta;
   }
 
   async delete(id) {
-    const perfil = await this.findOne(id);
-    await perfil.destroy();
+    const user = await this.findOne(id);
+    await user.destroy();
     return { id };
   }
 }
 
-module.exports = PerfilService;
+module.exports = UserService;
