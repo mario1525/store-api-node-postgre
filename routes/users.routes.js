@@ -1,7 +1,9 @@
 const express = require('express');
+
 const router = express.Router();
-const serviceUsers = require('../services/user.servis');
-const Users = new serviceUsers();
+const UserService = require('../services/user.servis');
+
+const Users = new UserService();
 const validatorHandler = require('../middlewares/validator.handler');
 const {
   createUSerSchema,
@@ -31,7 +33,7 @@ router.get(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 // crear usario
@@ -40,13 +42,13 @@ router.post(
   validatorHandler(createUSerSchema, 'body'),
   async (req, res, next) => {
     try {
-      const body = req.body;
+      const { body } = req;
       const newUser = await Users.create(body);
       res.status(201).json(newUser);
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 // actualizar usuario
@@ -57,13 +59,13 @@ router.patch(
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      const body = req.body;
+      const { body } = req;
       const user = await Users.update(id, body);
       res.json(user);
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 // eliminar usarios
@@ -78,7 +80,7 @@ router.delete(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 module.exports = router;

@@ -9,7 +9,7 @@ const UserSchema = {
     primaryKey: true,
     type: DataTypes.INTEGER,
   },
-  email: {
+  Email: {
     allowNull: false,
     type: DataTypes.STRING,
     unique: true,
@@ -18,11 +18,11 @@ const UserSchema = {
     allowNull: false,
     type: DataTypes.STRING,
   },
-  recoveryToken: {
-    field: 'recovery_token',
-    allowNull: false,
-    type: DataTypes.STRING,
-  },
+  // recoveryToken: {
+  //   field: 'recovery_token',
+  //   allowNull: false,
+  //   type: DataTypes.STRING,
+  // },
   role: {
     allowNull: false,
     type: DataTypes.STRING,

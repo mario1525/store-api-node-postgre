@@ -1,5 +1,5 @@
 const express = require('express');
-const servisorden = require('../services/orden.services');
+const OrdenService = require('../services/orden.services');
 const validatorHandler = require('../middlewares/validator.handler');
 const {
   createOrdenschema,
@@ -7,7 +7,7 @@ const {
   getOrdenschema,
 } = require('../schemas/orden.schema');
 
-const service = new servisorden();
+const service = new OrdenService();
 const router = express.Router();
 
 router.get('/', async (req, res, next) => {
@@ -30,7 +30,7 @@ router.get(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 router.post(
@@ -38,31 +38,31 @@ router.post(
   validatorHandler(createOrdenschema, 'body'),
   async (req, res, next) => {
     try {
-      const body = req.body;
+      const { body } = req;
       const newOrden = await service.create(body);
       res.status(201).json(newOrden);
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 router.patch(
   '/:id',
-  //validar el id
+  // validar el id
   validatorHandler(getOrdenschema, 'params'),
-  //validar los atributos
+  // validar los atributos
   validatorHandler(updateOrdenschema, 'body'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      const body = req.body;
+      const { body } = req;
       const orden = await service.update(id, body);
       res.json(orden);
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 router.delete(
@@ -76,7 +76,7 @@ router.delete(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 module.exports = router;

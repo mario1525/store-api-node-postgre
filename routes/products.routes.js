@@ -1,6 +1,6 @@
 const express = require('express');
 
-const productservice = require('../services/products.servis');
+const ProductService = require('../services/products.servis');
 const validatorHandler = require('../middlewares/validator.handler');
 const {
   createProductSchema,
@@ -9,7 +9,7 @@ const {
   queryProductSchema,
 } = require('../schemas/product.schemas');
 
-const produt = new productservice();
+const produt = new ProductService();
 const router = express.Router();
 
 router.get(
@@ -22,7 +22,7 @@ router.get(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 router.get(
@@ -36,7 +36,7 @@ router.get(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 router.post(
@@ -44,31 +44,31 @@ router.post(
   validatorHandler(createProductSchema, 'body'),
   async (req, res, next) => {
     try {
-      const body = req.body;
+      const { body } = req;
       const newProduct = await produt.create(body);
       res.status(201).json(newProduct);
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 router.patch(
   '/:id',
-  //validar el id
+  // validar el id
   validatorHandler(getProductSchema, 'params'),
-  //validar los atributos
+  // validar los atributos
   validatorHandler(updateProductSchema, 'body'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      const body = req.body;
+      const { body } = req;
       const product = await produt.update(id, body);
       res.json(product);
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 router.delete(
@@ -82,7 +82,7 @@ router.delete(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 module.exports = router;

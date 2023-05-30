@@ -10,7 +10,7 @@
     "migrations:generate": "sequelize-cli migration:generate --name",
     "migrations:run": "sequelize-cli db:migrate",
     "migrations:revert": "sequelize-cli db:migrate:undo",
-    "lint:router": "eslint router/**",
+    "lint:router": "eslint routes/**",
     "lint:services": "eslint services/**",
     "lint:db": "eslint db/**",
     "lint:middlewares": "eslint middlewares/**",
@@ -19,7 +19,7 @@
     "lint:db:fix": "eslint db/** --fix",
     "lint:middlewares:fix": "eslint middlewares/** --fix",
     "lint:schemas:fix": "eslint schemas/** --fix",
-    "lint:router:fix": "eslint router/** --fix"
+    "lint:router:fix": "eslint routes/** --fix"
   },
   "keywords": [],
   "author": "",

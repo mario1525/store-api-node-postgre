@@ -1,18 +1,24 @@
-const { UserSchema, USER_TABLE } = require('../models/user.models');
+const { UserSchema, USER_TABLE } = require('../models/user.model');
 const { CategorySchema, CATEGORY_TABLE } = require('../models/categori.model');
 const { OrderSchema, ORDER_TABLE } = require('../models/orden.model');
-const { OrderProductSchema, ORDER_PRODUCT_TABLE } = require('../models/productOrden.model');
+const {
+  OrderProductSchema,
+  ORDER_PRODUCT_TABLE,
+} = require('../models/productOrden.model');
 const { ProductSchema, PRODUCT_TABLE } = require('../models/product.model');
-const { InventarioSchema, INVENTARIO_TABLE } = require('../models/inventario.model');
-const { PerfilSchema, PERFIL_TABLE } = require('../models/perfil.model');
+const {
+  InventarioSchema,
+  INVENTARIO_TABLE,
+} = require('../models/inventario.model');
+const { CustomerSchema, CUSTOMER_TABLE } = require('../models/customer.models');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface) {
     await queryInterface.createTable(USER_TABLE, UserSchema);
+    await queryInterface.createTable(CUSTOMER_TABLE, CustomerSchema);
     await queryInterface.createTable(CATEGORY_TABLE, CategorySchema);
     await queryInterface.createTable(ORDER_TABLE, OrderSchema);
-    await queryInterface.createTable(PERFIL_TABLE, PerfilSchema);
     await queryInterface.createTable(ORDER_PRODUCT_TABLE, OrderProductSchema);
     await queryInterface.createTable(PRODUCT_TABLE, ProductSchema);
     await queryInterface.createTable(INVENTARIO_TABLE, InventarioSchema);
@@ -31,7 +37,7 @@ module.exports = {
     await queryInterface.drop(ORDER_PRODUCT_TABLE);
     await queryInterface.drop(PRODUCT_TABLE);
     await queryInterface.drop(INVENTARIO_TABLE);
-    await queryInterface.drop(PERFIL_TABLE);
+    await queryInterface.drop(CUSTOMER_TABLE);
     /**
      * Add reverting commands here.
      *
