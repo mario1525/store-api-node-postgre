@@ -1,23 +1,19 @@
 const express = require('express');
-
-const productservice = require('./../services/products.servis');
+const servisorden = require('../services/orden.services');
 const validatorHandler = require('../middlewares/validator.handler');
 const {
-  createProductSchema,
-  updateProductSchema,
-  getProductSchema,
-  queryProductSchema
-} = require('../schemas/product.schemas');
+  createOrdenschema,
+  updateOrdenschema,
+  getOrdenschema,
+} = require('../schemas/orden.schema');
 
-const produt = new productservice();
+const service = new servisorden();
 const router = express.Router();
 
-router.get('/',
-validatorHandler(queryProductSchema, 'query'),
-async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
-    const products = await produt.find(req.query);
-    res.json(products);
+    const data = await service.find();
+    res.json(data);
   } catch (error) {
     next(error);
   }
@@ -25,12 +21,12 @@ async (req, res, next) => {
 
 router.get(
   '/:id',
-  validatorHandler(getProductSchema, 'params'),
+  validatorHandler(getOrdenschema, 'params'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      const product = await produt.findOne(id);
-      res.json(product);
+      const orden = await service.findOne(id);
+      res.json(orden);
     } catch (error) {
       next(error);
     }
@@ -39,12 +35,12 @@ router.get(
 
 router.post(
   '/',
-  validatorHandler(createProductSchema, 'body'),
+  validatorHandler(createOrdenschema, 'body'),
   async (req, res, next) => {
     try {
       const body = req.body;
-      const newProduct = await produt.create(body);
-      res.status(201).json(newProduct);
+      const newOrden = await service.create(body);
+      res.status(201).json(newOrden);
     } catch (error) {
       next(error);
     }
@@ -54,15 +50,15 @@ router.post(
 router.patch(
   '/:id',
   //validar el id
-  validatorHandler(getProductSchema, 'params'),
+  validatorHandler(getOrdenschema, 'params'),
   //validar los atributos
-  validatorHandler(updateProductSchema, 'body'),
+  validatorHandler(updateOrdenschema, 'body'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
       const body = req.body;
-      const product = await produt.update(id, body);
-      res.json(product);
+      const orden = await service.update(id, body);
+      res.json(orden);
     } catch (error) {
       next(error);
     }
@@ -71,11 +67,11 @@ router.patch(
 
 router.delete(
   '/:id',
-  validatorHandler(getProductSchema, 'params'),
+  validatorHandler(getOrdenschema, 'params'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      await produt.delete(id);
+      await service.delete(id);
       res.status(201).json({ id });
     } catch (error) {
       next(error);

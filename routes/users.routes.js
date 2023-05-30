@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const serviceUsers = require('./../services/users.servis');
+const serviceUsers = require('../services/user.servis');
 const Users = new serviceUsers();
 const validatorHandler = require('../middlewares/validator.handler');
 const {
@@ -19,7 +19,7 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-//retorna un solo usuario
+// retorna un solo usuario
 router.get(
   '/:id',
   validatorHandler(getUserSchema, 'params'),
@@ -34,7 +34,7 @@ router.get(
   }
 );
 
-//crear usario
+// crear usario
 router.post(
   '/',
   validatorHandler(createUSerSchema, 'body'),
@@ -49,7 +49,7 @@ router.post(
   }
 );
 
-//actualizar usuario
+// actualizar usuario
 router.patch(
   '/:id',
   validatorHandler(getUserSchema, 'params'),
@@ -66,7 +66,7 @@ router.patch(
   }
 );
 
-//eliminar usarios
+// eliminar usarios
 router.delete(
   '/:id',
   validatorHandler(getUserSchema, 'params'),

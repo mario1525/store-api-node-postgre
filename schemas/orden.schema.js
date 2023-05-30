@@ -8,7 +8,7 @@ const createOrdenschema = Joi.object({
 });
 
 const updateOrdenschema = Joi.object({
-  userId: userId,
+  userId,
 });
 
 const getOrdenschema = Joi.object({
