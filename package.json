@@ -19,6 +19,7 @@
     "lint:db:fix": "eslint db/** --fix",
     "lint:middlewares:fix": "eslint middlewares/** --fix",
     "lint:schemas:fix": "eslint schemas/** --fix",
+    "lint:index:fix": "eslint index.js --fix",
     "lint:router:fix": "eslint routes/** --fix"
   },
   "keywords": [],
@@ -47,6 +48,8 @@
     "passport-local": "^1.0.0",
     "pg": "^8.9.0",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.28.0"
+    "sequelize": "^6.28.0",
+    "swagger-ui": "^4.19.0",
+    "swagger-ui-express": "^4.6.3"
   }
 }

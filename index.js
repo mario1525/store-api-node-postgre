@@ -1,7 +1,9 @@
 const express = require('express');
 const cors = require('cors');
+const swaggerUi = require('swagger-ui-express');
 const routerApi = require('./routes/index');
 
+const swaggerDoc = require('./swagger.json');
 const { logErrors, errorHandler } = require('./middlewares/error.handler');
 
 const app = express();
@@ -26,6 +28,7 @@ app.get('/', (req, res) => {
     name: 'hello world docker ',
   });
 });
+app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 routerApi(app);
 
@@ -33,5 +36,5 @@ app.use(logErrors);
 app.use(errorHandler);
 
 app.listen(Port, () => {
-  console.log('server on portt ' + Port);
+  console.log(`server on portt ${Port}`);
 });

@@ -2,7 +2,7 @@ const boom = require('@hapi/boom');
 const { models } = require('../libs/sequelize');
 
 class CustomerService {
-  constructor() {}
+  // constructor() {}
 
   async find() {
     const rta = await models.Customer.findAll({
