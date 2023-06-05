@@ -15,31 +15,34 @@ class servisorden {
   }
 
   async find() {
-    const data = await models.Orden.findAll();
+    const data = await models.Order.findAll();
     return {
       data,
     };
   }
 
   async findOne(id) {
-    const orden = await models.Orden.findByPk(id);
-    if (!orden) {
+    const order = await models.Order.findByPk(id);
+    if (!order) {
       boom.notFound('orden not found ');
     }
     return {
-      orden,
+      order,
     };
   }
 
   async update(id, changes) {
-    const rta = await this.findOne(id).update(changes);
+    const model = await this.findOne(id);
+    const rta = model.update(changes);
     return {
       rta,
     };
   }
 
   async delete(id) {
-    return id;
+    const model = await this.findOne(id);
+    await model.destroy();
+    return { rta: true };
   }
 }
 

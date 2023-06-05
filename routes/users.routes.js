@@ -28,7 +28,7 @@ router.get(
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      const user = await Users.findone(id);
+      const user = await Users.findOne(id);
       res.json(user);
     } catch (error) {
       next(error);
@@ -53,6 +53,22 @@ router.post(
 
 // actualizar usuario
 router.patch(
+  '/:id',
+  validatorHandler(getUserSchema, 'params'),
+  validatorHandler(updateUserSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const { body } = req;
+      const user = await Users.update(id, body);
+      res.json(user);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.put(
   '/:id',
   validatorHandler(getUserSchema, 'params'),
   validatorHandler(updateUserSchema, 'body'),

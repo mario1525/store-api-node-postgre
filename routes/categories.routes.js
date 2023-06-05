@@ -33,7 +33,7 @@ router.get(
     } catch (error) {
       next(error);
     }
-  },
+  }
 );
 
 // crea una nueva categoria
@@ -48,7 +48,7 @@ router.post(
     } catch (error) {
       next(error);
     }
-  },
+  }
 );
 
 // actualiza una categoria
@@ -67,7 +67,26 @@ router.patch(
     } catch (error) {
       next(error);
     }
-  },
+  }
+);
+
+// actualiza una categoria
+router.put(
+  '/:id',
+  // validar el id
+  validatorHandler(getCategorySchema, 'params'),
+  // validar los atributos
+  validatorHandler(updateCategorySchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const { body } = req;
+      const categories = await category.update(id, body);
+      res.json(categories);
+    } catch (error) {
+      next(error);
+    }
+  }
 );
 
 // elmina una categoria
@@ -82,7 +101,7 @@ router.delete(
     } catch (error) {
       next(error);
     }
-  },
+  }
 );
 
 module.exports = router;

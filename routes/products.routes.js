@@ -22,7 +22,7 @@ router.get(
     } catch (error) {
       next(error);
     }
-  },
+  }
 );
 
 router.get(
@@ -36,7 +36,7 @@ router.get(
     } catch (error) {
       next(error);
     }
-  },
+  }
 );
 
 router.post(
@@ -50,7 +50,7 @@ router.post(
     } catch (error) {
       next(error);
     }
-  },
+  }
 );
 
 router.patch(
@@ -68,7 +68,25 @@ router.patch(
     } catch (error) {
       next(error);
     }
-  },
+  }
+);
+
+router.put(
+  '/:id',
+  // validar el id
+  validatorHandler(getProductSchema, 'params'),
+  // validar los atributos
+  validatorHandler(updateProductSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const { body } = req;
+      const product = await produt.update(id, body);
+      res.json(product);
+    } catch (error) {
+      next(error);
+    }
+  }
 );
 
 router.delete(
@@ -82,7 +100,7 @@ router.delete(
     } catch (error) {
       next(error);
     }
-  },
+  }
 );
 
 module.exports = router;

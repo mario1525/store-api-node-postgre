@@ -11,7 +11,7 @@ function routerApi(app) {
 
   app.use('/api/v1', router);
   router.use('/customer', customerRouter);
-  router.use('/orden', ordenRouter);
+  router.use('/order', ordenRouter);
   router.use('/products', productsRouter);
   router.use('/users', usersRouter);
   router.use('/categories', categoriesRouter);

@@ -12,9 +12,7 @@ class categoryservices {
   }
 
   async find() {
-    const data = await models.Category.findAll({
-      include: 'products',
-    });
+    const data = await models.Category.findAll();
     return {
       data,
     };
@@ -22,7 +20,7 @@ class categoryservices {
 
   async findone(id) {
     const category = await models.Category.findByPk(id, {
-      include: ['products'],
+      include: ['produucts'],
     });
     if (!category) {
       boom.notFound('category not found ');
