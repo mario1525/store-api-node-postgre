@@ -33,7 +33,7 @@ router.get(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 // crea una nueva categoria
@@ -48,7 +48,7 @@ router.post(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 // actualiza una categoria
@@ -67,7 +67,7 @@ router.patch(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 // actualiza una categoria
@@ -86,7 +86,7 @@ router.put(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 // elmina una categoria
@@ -101,7 +101,7 @@ router.delete(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 module.exports = router;

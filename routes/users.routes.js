@@ -33,7 +33,7 @@ router.get(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 // crear usario
@@ -48,7 +48,7 @@ router.post(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 // actualizar usuario
@@ -65,7 +65,7 @@ router.patch(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 router.put(
@@ -81,7 +81,7 @@ router.put(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 // eliminar usarios
@@ -96,7 +96,7 @@ router.delete(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 module.exports = router;
