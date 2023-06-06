@@ -12,15 +12,16 @@ const offset = Joi.number().integer();
 const createProductSchema = Joi.object({
   name: name.required(),
   image: image.required(),
-  price: price.required(),
   description: description.required(),
+  price: price.required(),
   categoryId: categoryId.required(),
 });
 
 const updateProductSchema = Joi.object({
   name,
-  price,
+  image,
   description,
+  price,
   categoryId,
 });
 

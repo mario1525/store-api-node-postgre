@@ -1,7 +1,7 @@
 const Joi = require('joi');
 
 const id = Joi.number().integer();
-const Email = Joi.string().email({
+const email = Joi.string().email({
   minDomainSegments: 2,
   tlds: { allow: ['com', 'net'] },
 });
@@ -9,13 +9,13 @@ const password = Joi.string().min(8);
 const role = Joi.string();
 
 const createUSerSchema = Joi.object({
-  Email: Email.required(),
+  email: email.required(),
   password: password.required(),
   role: role.required(),
 });
 
 const updateUserSchema = Joi.object({
-  Email,
+  email,
   password,
   role,
 });

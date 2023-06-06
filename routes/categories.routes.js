@@ -14,8 +14,8 @@ const {
 // devuelve todas las categorias
 router.get('/', async (req, res, next) => {
   try {
-    const categories = await category.find();
-    res.json(categories);
+    const data = await category.find();
+    res.json(data);
   } catch (error) {
     next(error);
   }

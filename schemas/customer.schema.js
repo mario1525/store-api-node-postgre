@@ -3,7 +3,7 @@ const Joi = require('joi');
 const id = Joi.number().integer();
 const name = Joi.string().min(3).max(15);
 const lastName = Joi.string().min(3).max(15);
-const Email = Joi.string().email({
+const email = Joi.string().email({
   minDomainSegments: 2,
   tlds: { allow: ['com', 'net'] },
 });
@@ -15,7 +15,7 @@ const createCustomerSchema = Joi.object({
   lastName: lastName.required(),
   phone: phone.required(),
   user: {
-    Email: Email.required(),
+    email: email.required(),
     password: password.required(),
   },
 });
