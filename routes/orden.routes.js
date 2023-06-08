@@ -30,7 +30,7 @@ router.get(
     } catch (error) {
       next(error);
     }
-  },
+  }
 );
 
 router.post(
@@ -44,7 +44,7 @@ router.post(
     } catch (error) {
       next(error);
     }
-  },
+  }
 );
 
 router.patch(
@@ -62,7 +62,25 @@ router.patch(
     } catch (error) {
       next(error);
     }
-  },
+  }
+);
+
+router.put(
+  '/:id',
+  // validar el id
+  validatorHandler(getOrdenschema, 'params'),
+  // validar los atributos
+  validatorHandler(updateOrdenschema, 'body'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const { body } = req;
+      const orden = await service.update(id, body);
+      res.json(orden);
+    } catch (error) {
+      next(error);
+    }
+  }
 );
 
 router.delete(
@@ -76,7 +94,7 @@ router.delete(
     } catch (error) {
       next(error);
     }
-  },
+  }
 );
 
 module.exports = router;
