@@ -24,244 +24,640 @@
   ],
   "tags": [
     {
-      "name": "customer",
-      "description": "all about customers",
-      "externalDocs": {
-        "description": "Find out more",
-        "url": "https://localhost/api/v1/customer"
-      }
+      "name": "Customer",
+      "description": "Operaciones relacionadas con los clientes de la tienda online"
     },
     {
-      "name": "product",
-      "description": "All products in the store",
-      "externalDocs": {
-        "description": "Find out more about our store",
-        "url": "https://localhost/api/v1/products"
-      }
+      "name": "User",
+      "description": "Operaciones relacionadas con los usuarios de la tienda online"
     },
     {
-      "name": "user",
-      "description": "Operations about user",
-      "externalDocs": {
-        "description": "Find out more about our store",
-        "url": "https://localhost/api/v1/users"
-      }
+      "name": "Product",
+      "description": "Operaciones relacionadas con los productos de la tienda online"
     },
     {
-      "name": "category",
-      "description": "Operations about category",
-      "externalDocs": {
-        "description": "Find out more about our store",
-        "url": "https://localhost/api/v1/categories"
-      }
+      "name": "Category",
+      "description": "Operaciones relacionadas con las categorías de productos de la tienda online"
     },
     {
-      "name": "order",
-      "description": "Operations about user",
-      "externalDocs": {
-        "description": "Find out more about our store",
-        "url": "https://localhost/api/v1/order"
-      }
+      "name": "Order",
+      "description": "Operaciones relacionadas con las órdenes de compra de la tienda online"
     }
   ],
   "paths": {
-    "/users": {
-      "post": {
+    "/customer": {
+      "get": {
         "tags": [
-          "user"
+          "Customer"
         ],
-        "summary": "Create user",
-        "description": "This can only be done by the logged in user.",
-        "operationId": "createUser",
-        "requestBody": {
-          "description": "Created user object",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            },
-            "application/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            },
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            }
-          }
-        },
+        "summary": "Obtiene todos los clientes",
+        "description": "Retorna una lista de todos los clientes registrados.",
         "responses": {
-          "default": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
+          "200": {
+            "description": "Lista de clientes obtenida correctamente."
           }
         }
       },
-      "get": {
+      "post": {
         "tags": [
-          "user"
+          "Customer"
         ],
-        "summary": "returns all users",
-        "description": "",
-        "operationId": "loginUser",
+        "summary": "Crea un nuevo cliente",
+        "description": "Crea un nuevo cliente en la tienda online.",
         "parameters": [
           {
-            "name": "username",
-            "in": "query",
-            "description": "The user name for login",
-            "required": false,
+            "name": "body",
+            "in": "body",
+            "description": "Datos del cliente a crear.",
+            "required": true,
             "schema": {
-              "type": "string"
+              "$ref": "#/definitions/CustomerInput"
             }
-          },
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Cliente creado correctamente."
+          }
+        }
+      }
+    },
+    "/customer/{id}": {
+      "get": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "Obtiene un cliente específico",
+        "description": "Retorna los detalles de un cliente específico.",
+        "parameters": [
           {
-            "name": "password",
-            "in": "query",
-            "description": "The password for login in clear text",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
+            "name": "id",
+            "in": "path",
+            "description": "ID del cliente a obtener.",
+            "required": true,
+            "type": "integer"
           }
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "headers": {
-              "X-Rate-Limit": {
-                "description": "calls per hour allowed by the user",
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              },
-              "X-Expires-After": {
-                "description": "date in UTC when token expires",
-                "schema": {
-                  "type": "string",
-                  "format": "date-time"
-                }
-              }
-            },
-            "content": {
-              "application/xml": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
+            "description": "Cliente obtenido correctamente."
           },
-          "400": {
-            "description": "Invalid username/password supplied"
-          }
-        }
-      }
-    },
-    "/user/id": {
-      "get": {
-        "tags": [
-          "user"
-        ],
-        "summary": "return one user",
-        "description": "",
-        "operationId": "logoutUser",
-        "parameters": [],
-        "responses": {
-          "default": {
-            "description": "successful operation"
+          "404": {
+            "description": "Cliente no encontrado."
           }
         }
       },
       "put": {
         "tags": [
-          "user"
+          "Customer"
         ],
-        "summary": "Update user",
-        "description": "This can only be done by the logged in user.",
-        "operationId": "updateUser",
+        "summary": "Actualiza un cliente existente",
+        "description": "Actualiza los datos de un cliente existente.",
         "parameters": [
           {
-            "name": "username",
+            "name": "id",
             "in": "path",
-            "description": "name that need to be deleted",
+            "description": "ID del cliente a actualizar.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Nuevos datos del cliente.",
             "required": true,
             "schema": {
-              "type": "string"
+              "$ref": "#/definitions/CustomerInput"
             }
           }
         ],
-        "requestBody": {
-          "description": "Update an existent user in the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            },
-            "application/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            },
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            }
-          }
-        },
         "responses": {
-          "default": {
-            "description": "successful operation"
+          "200": {
+            "description": "Cliente actualizado correctamente."
+          },
+          "404": {
+            "description": "Cliente no encontrado."
           }
         }
       },
       "delete": {
         "tags": [
-          "user"
+          "Customer"
         ],
-        "summary": "Delete user",
-        "description": "This can only be done by the logged in user.",
-        "operationId": "deleteUser",
+        "summary": "Elimina un cliente existente",
+        "description": "Elimina un cliente existente de la tienda online.",
         "parameters": [
           {
-            "name": "username",
+            "name": "id",
             "in": "path",
-            "description": "The name that needs to be deleted",
+            "description": "ID del cliente a eliminar.",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Cliente eliminado correctamente."
+          },
+          "404": {
+            "description": "Cliente no encontrado."
+          }
+        }
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Obtiene todos los usuarios",
+        "description": "Retorna una lista de todos los usuarios registrados.",
+        "responses": {
+          "200": {
+            "description": "Lista de usuarios obtenida correctamente."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Crea un nuevo usuario",
+        "description": "Crea un nuevo usuario en la tienda online.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Datos del usuario a crear.",
             "required": true,
             "schema": {
-              "type": "string"
+              "$ref": "#/definitions/UserInput"
             }
           }
         ],
         "responses": {
-          "400": {
-            "description": "Invalid username supplied"
-          },
-          "404": {
-            "description": "User not found"
+          "201": {
+            "description": "Usuario creado correctamente."
           }
         }
       }
+    },
+    "/user/{id}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Obtiene un usuario específico",
+        "description": "Retorna los detalles de un usuario específico.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID del usuario a obtener.",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuario obtenido correctamente."
+          },
+          "404": {
+            "description": "Usuario no encontrado."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Actualiza un usuario existente",
+        "description": "Actualiza los datos de un usuario existente.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID del usuario a actualizar.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Nuevos datos del usuario.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuario actualizado correctamente."
+          },
+          "404": {
+            "description": "Usuario no encontrado."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Elimina un usuario existente",
+        "description": "Elimina un usuario existente de la tienda online.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID del usuario a eliminar.",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Usuario eliminado correctamente."
+          },
+          "404": {
+            "description": "Usuario no encontrado."
+          }
+        }
+      }
+    },
+    "/product": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Obtiene todos los productos",
+        "description": "Retorna una lista de todos los productos disponibles.",
+        "responses": {
+          "200": {
+            "description": "Lista de productos obtenida correctamente."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Crea un nuevo producto",
+        "description": "Crea un nuevo producto en la tienda online.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Datos del producto a crear.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ProductInput"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Producto creado correctamente."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Actualiza un producto existente",
+        "description": "Actualiza los datos de un producto existente.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID del producto a actualizar.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Nuevos datos del producto.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ProductInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Producto actualizado correctamente."
+          },
+          "404": {
+            "description": "Producto no encontrado."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Elimina un producto existente",
+        "description": "Elimina un producto existente de la tienda online.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID del producto a eliminar.",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Producto eliminado correctamente."
+          },
+          "404": {
+            "description": "Producto no encontrado."
+          }
+        }
+      }
+    },
+    "/category": {
+      "get": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Obtiene todas las categorías",
+        "description": "Retorna una lista de todas las categorías disponibles.",
+        "responses": {
+          "200": {
+            "description": "Lista de categorías obtenida correctamente."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Crea una nueva categoría",
+        "description": "Crea una nueva categoría en la tienda online.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Datos de la categoría a crear.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CategoryInput"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Categoría creada correctamente."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Actualiza una categoría existente",
+        "description": "Actualiza los datos de una categoría existente.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID de la categoría a actualizar.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Nuevos datos de la categoría.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CategoryInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Categoría actualizada correctamente."
+          },
+          "404": {
+            "description": "Categoría no encontrada."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Elimina una categoría existente",
+        "description": "Elimina una categoría existente de la tienda online.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID de la categoría a eliminar.",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Categoría eliminada correctamente."
+          },
+          "404": {
+            "description": "Categoría no encontrada."
+          }
+        }
+      }
+    },
+    "/order": {
+      "get": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "Obtiene todas las órdenes",
+        "description": "Retorna una lista de todas las órdenes realizadas.",
+        "responses": {
+          "200": {
+            "description": "Lista de órdenes obtenida correctamente."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "Crea una nueva orden",
+        "description": "Crea una nueva orden en la tienda online.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Datos de la orden a crear.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/OrderInput"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Orden creada correctamente."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "Actualiza una orden existente",
+        "description": "Actualiza los datos de una orden existente.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID de la orden a actualizar.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Nuevos datos de la orden.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/OrderInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Orden actualizada correctamente."
+          },
+          "404": {
+            "description": "Orden no encontrada."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "Elimina una orden existente",
+        "description": "Elimina una orden existente de la tienda online.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID de la orden a eliminar.",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Orden eliminada correctamente."
+          },
+          "404": {
+            "description": "Orden no encontrada."
+          }
+        }
+      }
+    },
+    "definitions": null,
+    "CustomerInput": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "email"
+      ]
+    },
+    "UserInput": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "email",
+        "password"
+      ]
+    },
+    "ProductInput": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "name",
+        "price"
+      ]
+    },
+    "CategoryInput": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "OrderInput": {
+      "type": "object",
+      "properties": {
+        "customer": {
+          "type": "string"
+        },
+        "products": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "total": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "customer",
+        "products",
+        "total"
+      ]
     }
   },
   "components": {
