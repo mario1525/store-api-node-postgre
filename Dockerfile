@@ -1,4 +1,5 @@
-FROM node:19
+FROM node:18
+
 
 COPY ["package.json","package-lock.json", "/usr/src/"]
 
